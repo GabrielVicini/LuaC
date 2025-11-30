@@ -1,5 +1,7 @@
 # LuaC
 
+DANGER! THIS PROJECT IS NOT EVEN IN A USEABLE STATE YET. DO NOT USE UNLESS YOU ARE SURE WHAT YOU ARE DOING.
+
 A small experimental “fake OS” environment built in C.  
 This project embeds a Lua VM, uses Raylib for window/input handling, and renders everything through a software framebuffer.
 
@@ -8,17 +10,13 @@ This is my first project written in C, so expect bugs, incomplete systems, and r
 ---
 
 ## Overview
-LuaC creates a simple virtual computer environment:
+LuaC creates a minimal virtual computer environment.
 
-- A framebuffer drawn entirely in software  
-- A Lua-based “kernel” that runs each frame  
-- A minimal C→Lua API for graphics, keyboard, and mouse  
-- A custom text renderer  
-- UTF-8 character input  
-- Raylib handling window creation and event polling  
+The core design philosophy is simple: **everything is done in Lua**.  
+Unlike alternatives such as CraftOS-PC, LuaC does not provide high-level helpers or shortcuts.  
+You are expected to implement your own text rendering, UI, and higher-level systems entirely in Lua using the low-level pixel API.
 
-Everything you see on screen is drawn pixel-by-pixel by the Lua script using the exposed API.
-
+Everything on the screen is drawn pixel-by-pixel by Lua code using the exposed C API.
 
 ---
 
@@ -32,4 +30,5 @@ Everything you see on screen is drawn pixel-by-pixel by the Lua script using the
 - Raylib 5.x  
 - Lua 5.4.8 (compiled from source)  
 - A C compiler (MinGW, MSVC, Clang, etc.)
-**Personally, I dont know much about C compilers; But i use Clion with CMake and MinGW. And I'm using C11**
+
+Personally, this project is built using **CLion**, **CMake**, **MinGW**, and **C11**, but any standard-compliant setup should work.
