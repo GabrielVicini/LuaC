@@ -16,6 +16,8 @@ The core design philosophy is simple: **everything is done in Lua**.
 Unlike alternatives such as CraftOS-PC, LuaC does not provide high-level helpers or shortcuts.  
 You are expected to implement your own text rendering, UI, and higher-level systems entirely in Lua using the low-level pixel API.
 
+Now, I will proabbly upload some templayes to help people get started but that's much later.
+
 Everything on the screen is drawn pixel-by-pixel by Lua code using the exposed C API.
 
 ![202511301038](https://github.com/user-attachments/assets/c534417f-82e3-4f7e-93db-d18d550f20b4)
@@ -29,9 +31,4 @@ Everything on the screen is drawn pixel-by-pixel by Lua code using the exposed C
 ---
 
 ## Build Requirements
-- CMake 3.10 or newer  
-- Raylib 5.x  
-- Lua 5.4.8 (compiled from source)  
-- A C compiler (MinGW, MSVC, Clang, etc.)
-
-Personally, this project is built using **CLion**, **CMake**, **MinGW**, and **C11**, but any standard-compliant setup should work.
+idk yet
