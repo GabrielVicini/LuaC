@@ -18,7 +18,7 @@ You are expected to implement your own text rendering, UI, and higher-level syst
 
 Everything on the screen is drawn pixel-by-pixel by Lua code using the exposed C API.
 
-<img width="1178" height="397" alt="image" src="https://github.com/user-attachments/assets/98195523-461b-4a0f-b711-5629128a2676" />
+<img width="600" height="397" alt="image" src="https://github.com/user-attachments/assets/98195523-461b-4a0f-b711-5629128a2676" />
 
 
 ---
