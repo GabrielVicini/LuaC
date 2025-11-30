@@ -1,8 +1,7 @@
 #include "raylib.h"
 #include "engine/render_buffer.h"
 #include "engine/lua_engine.h"
-#include "engine/dev_tools.h"
-#include "lua/library/old_lua_api.h"
+#include "lua/library/LuaGraphics.h"
 
 int main(void)
 {
@@ -16,7 +15,7 @@ int main(void)
     Framebuffer fb = Framebuffer_Create(fbWidth, fbHeight);
     Framebuffer_Clear(&fb, BLACK);
 
-    LuaAPI_Init(&fb);
+    GraphicsInit(&fb);
 
     LuaEngine_RunStartup(L);
 

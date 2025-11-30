@@ -1,5 +1,5 @@
-#ifndef LUA_API_H
-#define LUA_API_H
+#ifndef Keyboard_H
+#define Keyboard_H
 
 #include "lua.h"
 #include "lauxlib.h"

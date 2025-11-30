@@ -1,5 +1,6 @@
 #include "lua_engine.h"
-#include "keyboard.h"
+#include "LuaGraphics.h"
+#include "LuaSystem.h"
 #include <stdio.h>
 
 lua_State* LuaEngine_Create() {
@@ -10,7 +11,8 @@ lua_State* LuaEngine_Create() {
     luaL_requiref(L, "table", luaopen_table, 1);
     luaL_requiref(L, "utf8", luaopen_utf8, 1);
     luaL_requiref(L, "coroutine", luaopen_coroutine, 1);
-    LuaAPI_Register(L);
+    GraphicsRegister(L);
+    SystemRegister(L);
     return L;
 }
 

@@ -24,8 +24,11 @@ add_executable(LuaC
         engine/render_buffer.c
         engine/dev_tools.c
         engine/lua_engine.c
-        lua/library/keyboard.c
+        lua/library/LuaKeyboard.c
         ${LUA_SOURCES}
+        lua/library/LuaGraphics.c
+        lua/library/LuaSystem.c
+        lua/library/LuaSystem.h
 )
 
 target_include_directories(LuaC PUBLIC
@@ -35,10 +38,31 @@ target_include_directories(LuaC PUBLIC
         ${CMAKE_SOURCE_DIR}/engine
         ${CMAKE_SOURCE_DIR}/lua/library
 )
-# sdfsf
-target_link_libraries(LuaC
-        raylib
-        opengl32
-        gdi32
-        winmm
-)
+
+if (WIN32)
+    target_link_libraries(LuaC
+            raylib
+            opengl32
+            gdi32
+            winmm
+    )
+elseif (APPLE)
+    target_link_libraries(LuaC
+            raylib
+            "-framework OpenGL"
+            "-framework Cocoa"
+            "-framework IOKit"
+            "-framework CoreVideo"
+    )
+else()  # Linux or other UNIX
+    target_link_libraries(LuaC
+            raylib
+            pthread
+            m
+            dl
+            GL
+            X11
+            Xrandr
+            Xi
+    )
+endif()
