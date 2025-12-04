@@ -1,7 +1,10 @@
 #include "raylib.h"
 #include "engine/render_buffer.h"
 #include "engine/lua_engine.h"
+
 #include "lua/library/LuaGraphics.h"
+#include "lua/library/LuaSystem.h"
+#include "lua/library/LuaKeyboard.h"
 
 int main(void)
 {
@@ -16,11 +19,11 @@ int main(void)
     Framebuffer_Clear(&fb, BLACK);
 
     GraphicsInit(&fb);
+    SystemInit(&fb);
 
     LuaEngine_RunStartup(L);
 
     SetTargetFPS(120);
-    int t = 0;
 
     while (!WindowShouldClose()) {
 
@@ -28,7 +31,6 @@ int main(void)
 
         BeginDrawing();
         ClearBackground(BLACK);
-        // DebugScreen1(&fb);
 
         Framebuffer_Render(&fb, GetScreenWidth(), GetScreenHeight());
         EndDrawing();

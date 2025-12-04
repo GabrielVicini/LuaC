@@ -22,7 +22,6 @@ list(REMOVE_ITEM LUA_SOURCES
 add_executable(LuaC
         main.c
         engine/render_buffer.c
-        engine/dev_tools.c
         engine/lua_engine.c
         lua/library/LuaKeyboard.c
         ${LUA_SOURCES}
@@ -66,3 +65,11 @@ else()  # Linux or other UNIX
             Xi
     )
 endif()
+
+add_custom_command(
+        TARGET LuaC POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/lua/rom"
+        "${CMAKE_BINARY_DIR}/lua/rom"
+)
+

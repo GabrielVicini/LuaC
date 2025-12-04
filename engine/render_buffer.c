@@ -1,5 +1,6 @@
 #include "render_buffer.h"
 #include "raylib.h"
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -53,6 +54,41 @@ void Framebuffer_Clear(Framebuffer *fb, Color c) {
     for (int i = 0; i < total; i++)
         fb->pixels[i] = c;
 }
+
+void Framebuffer_FillRect(Framebuffer *fb, int x, int y, int w, int h, Color c) {
+    if (x < 0) { w += x; x = 0; }
+    if (y < 0) { h += y; y = 0; }
+    if (x + w > fb->width)  w = fb->width  - x;
+    if (y + h > fb->height) h = fb->height - y;
+    if (w <= 0 || h <= 0) return;
+
+    for (int yy = y; yy < y + h; yy++) {
+        Color *row = fb->pixels + yy * fb->width + x;
+        for (int xx = 0; xx < w; xx++) {
+            row[xx] = c;
+        }
+    }
+}
+
+void Framebuffer_ScrollUp(Framebuffer *fb, int dy, Color clearColor) {
+    if (dy <= 0 || dy >= fb->height) return;
+
+    int rowPixels = fb->width;
+    int rowsToMove = fb->height - dy;
+
+    memmove(
+        fb->pixels,
+        fb->pixels + dy * rowPixels,
+        rowsToMove * rowPixels * sizeof(Color)
+    );
+
+    Color *start = fb->pixels + rowsToMove * rowPixels;
+    int clearCount = dy * rowPixels;
+    for (int i = 0; i < clearCount; i++) {
+        start[i] = clearColor;
+    }
+}
+
 
 void Framebuffer_SetPixel(Framebuffer *fb, int x, int y, Color c) {
     if (x < 0 || y < 0 || x >= fb->width || y >= fb->height)
