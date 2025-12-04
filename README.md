@@ -1,7 +1,7 @@
-# Lua
+# LuaC (I will change the name soon because LuaC is the same name as the offical Lua compiler and it makes error checking really confusing)
 
-# DANGER, DO NOT USE THIS PROJECT
-# It is not even in a buildable on your own state yet, check back in a few weeks.
+**DANGER, DO NOT USE THIS PROJECT**
+**It is not in a usable on your own state yet, check back in a few weeks.***
 
 A small experimental “fake OS” environment built in C.  
 This project embeds a Lua VM, uses Raylib for window/input handling, and renders everything through a software framebuffer.
