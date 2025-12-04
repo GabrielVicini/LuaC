@@ -1,6 +1,4 @@
-# LuaC
-
-DANGER! THIS PROJECT IS NOT EVEN IN A USEABLE STATE YET. DO NOT USE UNLESS YOU ARE SURE WHAT YOU ARE DOING.
+# Lua
 
 A small experimental “fake OS” environment built in C.  
 This project embeds a Lua VM, uses Raylib for window/input handling, and renders everything through a software framebuffer.
@@ -14,19 +12,12 @@ LuaC creates a minimal virtual computer environment.
 
 The core design philosophy is simple: **everything is done in Lua**.  
 Unlike alternatives such as CraftOS-PC, LuaC does not provide high-level helpers or shortcuts.  
-You are expected to implement your own text rendering, UI, and higher-level systems entirely in Lua using the low-level pixel API.
 
-Now, I will proabbly upload some templayes to help people get started but that's much later.
+You are expected to implement your own text rendering, UI, and higher-level systems entirely in Lua using the low-level pixel API, there are some other graphic functions such as lines and regtangles because of performance concern. (Clearing the screen shouldn't take 20,000 API calls)
 
-Everything on the screen is drawn pixel-by-pixel by Lua code using the exposed C API.
+[RaytracingTest](https://github.com/user-attachments/assets/0eb6ed60-ff40-4b04-bc51-cd262a22981f)
 
-![202511301038](https://github.com/user-attachments/assets/c534417f-82e3-4f7e-93db-d18d550f20b4)
-
-
----
-
-## Features
-*(intentionally left empty)*
+![FirstGraphicsDemo](https://github.com/user-attachments/assets/c534417f-82e3-4f7e-93db-d18d550f20b4)
 
 ---
 
