@@ -1,5 +1,4 @@
 # RetroC 
-(I will change the name soon because RetroC is the same name as the offical Lua compiler and it makes error debuging really confusing)
 
 ## DANGER, DO NOT USE THIS PROJECT**
 **It is not in a usable on your own state yet, check back in a few weeks.***
