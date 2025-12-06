@@ -70,24 +70,89 @@ void Framebuffer_FillRect(Framebuffer *fb, int x, int y, int w, int h, Color c) 
     }
 }
 
-void Framebuffer_ScrollUp(Framebuffer *fb, int dy, Color clearColor) {
-    if (dy <= 0 || dy >= fb->height) return;
+void Framebuffer_Blit(Framebuffer *fb,
+                      int sx, int sy, int w, int h,
+                      int dx, int dy)
+{
+    if (w <= 0 || h <= 0) return;
+    if (!fb || !fb->pixels) return;
 
-    int rowPixels = fb->width;
-    int rowsToMove = fb->height - dy;
+    // basic clipping to framebuffer bounds
 
-    memmove(
-        fb->pixels,
-        fb->pixels + dy * rowPixels,
-        rowsToMove * rowPixels * sizeof(Color)
-    );
+    // clip source rect
+    if (sx < 0)          { w += sx; dx -= sx; sx = 0; }
+    if (sy < 0)          { h += sy; dy -= sy; sy = 0; }
+    if (sx + w > fb->width)  w = fb->width  - sx;
+    if (sy + h > fb->height) h = fb->height - sy;
 
-    Color *start = fb->pixels + rowsToMove * rowPixels;
-    int clearCount = dy * rowPixels;
-    for (int i = 0; i < clearCount; i++) {
-        start[i] = clearColor;
+    // clip dest rect
+    if (dx < 0)          { w += dx; sx -= dx; dx = 0; }
+    if (dy < 0)          { h += dy; sy -= dy; dy = 0; }
+    if (dx + w > fb->width)  w = fb->width  - dx;
+    if (dy + h > fb->height) h = fb->height - dy;
+
+    if (w <= 0 || h <= 0) return;
+
+    int pitch = fb->width;
+
+    // copy direction (handle overlap)
+    int yStart, yEnd, yStep;
+    if (dy > sy) {
+        // moving down: copy bottom-up
+        yStart = h - 1;
+        yEnd   = -1;
+        yStep  = -1;
+    } else {
+        // moving up or same: copy top-down
+        yStart = 0;
+        yEnd   = h;
+        yStep  = 1;
+    }
+
+    for (int j = yStart; j != yEnd; j += yStep) {
+        Color *srcRow = fb->pixels + (sy + j) * pitch + sx;
+        Color *dstRow = fb->pixels + (dy + j) * pitch + dx;
+        memmove(dstRow, srcRow, w * sizeof(Color));
     }
 }
+
+Color Framebuffer_GetPixel(Framebuffer *fb, int x, int y) {
+    // safe default (black, opaque)
+    Color c = { 0, 0, 0, 255 };
+
+    if (!fb || !fb->pixels)
+        return c;
+
+    if (x < 0 || y < 0 || x >= fb->width || y >= fb->height)
+        return c;
+
+    return fb->pixels[y * fb->width + x];
+}
+
+
+void Framebuffer_DrawLine(Framebuffer *fb,
+                          int x0, int y0,
+                          int x1, int y1,
+                          Color c)
+{
+    if (!fb || !fb->pixels) return;
+
+    int dx = abs(x1 - x0);
+    int sx = x0 < x1 ? 1 : -1;
+    int dy = -abs(y1 - y0);
+    int sy = y0 < y1 ? 1 : -1;
+    int err = dx + dy;
+
+    while (1) {
+        Framebuffer_SetPixel(fb, x0, y0, c);
+
+        if (x0 == x1 && y0 == y1) break;
+        int e2 = 2 * err;
+        if (e2 >= dy) { err += dy; x0 += sx; }
+        if (e2 <= dx) { err += dx; y0 += sy; }
+    }
+}
+
 
 
 void Framebuffer_SetPixel(Framebuffer *fb, int x, int y, Color c) {

@@ -8,19 +8,12 @@ static double update_thread_wake = 0.0;
 
 lua_State* LuaEngine_Create() {
     lua_State *L = luaL_newstate();
-    luaL_requiref(L, "_G", luaopen_base, 1);
-    luaL_requiref(L, "math", luaopen_math, 1);
-    luaL_requiref(L, "string", luaopen_string, 1);
-    luaL_requiref(L, "table", luaopen_table, 1);
-    luaL_requiref(L, "utf8", luaopen_utf8, 1);
-    luaL_requiref(L, "coroutine", luaopen_coroutine, 1);
-    luaL_requiref(L, "package", luaopen_package, 1);
-    luaL_requiref(L, "os", luaopen_package, 1);
-    lua_pop(L, 1); // because luaL_requiref leaves it on the stack
+    luaL_openlibs(L);          // <-- this loads base, math, string, table, io, os, debug, jit, etc.
     GraphicsRegister(L);
     SystemRegister(L);
     return L;
 }
+
 
 void LuaEngine_Destroy(lua_State *L) {
     lua_close(L);
@@ -62,30 +55,31 @@ void LuaEngine_Update(lua_State *L) {
         return;
     }
 
-    int nresults = 0;
-    int status = lua_resume(update_thread, NULL, 0, &nresults);
+    // LuaJIT: lua_resume(thread, nargs)
+    int status = lua_resume(update_thread, 0);
+    int nresults = lua_gettop(update_thread);  // how many values are on the stack
 
     if (status == LUA_YIELD) {
         if (nresults < 1 || !lua_isnumber(update_thread, -1)) {
             printf("wait() did not yield a numeric wake time (nresults=%d)\n", nresults);
-            lua_pop(update_thread, nresults);
+            lua_settop(update_thread, 0);
             update_thread_wake = now;
         } else {
             update_thread_wake = lua_tonumber(update_thread, -1);
-            lua_pop(update_thread, nresults);
+            lua_settop(update_thread, 0);
         }
         return;
     }
 
-    if (status == LUA_OK) {
-        if (nresults > 0) lua_pop(update_thread, nresults);
+    if (status == LUA_OK || status == 0) {
+        if (nresults > 0) lua_settop(update_thread, 0);
         printf("update coroutine finished.\n");
         update_thread = NULL;
         return;
     }
+
     const char *err = lua_tostring(update_thread, -1);
     printf("Lua error in update coroutine: %s\n", err ? err : "(unknown)");
-    lua_pop(update_thread, 1);
-
+    lua_settop(update_thread, 0);
     update_thread = NULL;
 }

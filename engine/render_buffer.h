@@ -22,8 +22,15 @@ void Framebuffer_SetPixel(Framebuffer *fb, int x, int y, Color c);
 void Framebuffer_Render(Framebuffer *fb, int screenW, int screenH);
 
 void Framebuffer_FillRect(Framebuffer *fb, int x, int y, int w, int h, Color c);
-void Framebuffer_ScrollUp(Framebuffer *fb, int dy, Color clearColor);
+void Framebuffer_Blit(Framebuffer *fb,
+                      int sx, int sy, int w, int h,
+                      int dx, int dy);
+void Framebuffer_DrawLine(Framebuffer *fb,
+                          int x0, int y0,
+                          int x1, int y1,
+                          Color c);
 
-void *my_memmove(void *dst, const void *src, size_t n);
+
+Color Framebuffer_GetPixel(Framebuffer *fb, int x, int y);
 
 #endif
