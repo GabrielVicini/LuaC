@@ -1,7 +1,7 @@
 #include "render_buffer.h"
 #include <stdio.h>
 #include "raylib.h"
-#include "LuaSystem.h"
+#include "lua/LuaSystem.h"
 
 #include <time.h>
 

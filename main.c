@@ -2,14 +2,19 @@
 #include "engine/render_buffer.h"
 #include "engine/lua_engine.h"
 
-#include "lua/library/LuaGraphics.h"
-#include "lua/library/LuaSystem.h"
-#include "lua/library/LuaKeyboard.h"
+#include "lua/LuaGraphics.h"
+#include "lua/LuaSystem.h"
+#include "lua/LuaKeyboard.h"
 
 int main(void)
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(620, 360, "LuaC");
+    InitWindow(620, 360, "RetroC");
+
+    const char *iconFile = "../resources/assets/icon_light.png";
+    Image icon = LoadImage(iconFile);
+    SetWindowIcon(icon);
+    UnloadImage(icon);
 
     lua_State *L = LuaEngine_Create();
 

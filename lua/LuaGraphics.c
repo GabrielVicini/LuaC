@@ -1,7 +1,7 @@
 #include "render_buffer.h"
 #include <stdio.h>
 #include "raylib.h"
-#include "LuaGraphics.h"
+#include "lua/LuaGraphics.h"
 
 static Framebuffer *g_fb = NULL;
 

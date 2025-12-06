@@ -1,6 +1,6 @@
 #include "lua_engine.h"
-#include "LuaGraphics.h"
-#include "LuaSystem.h"
+#include "../lua/LuaGraphics.h"
+#include "../lua/LuaSystem.h"
 #include <stdio.h>
 
 static lua_State* update_thread = NULL;
@@ -20,7 +20,7 @@ void LuaEngine_Destroy(lua_State *L) {
 }
 
 void LuaEngine_RunStartup(lua_State *L) {
-    if (luaL_dofile(L, "lua/rom/kernel.lua") != LUA_OK) {
+    if (luaL_dofile(L, "resources/rom/kernel.lua") != LUA_OK) {
         const char *err = lua_tostring(L, -1);
         printf("Lua BIOS error: %s\n", err);
         lua_pop(L, 1);
