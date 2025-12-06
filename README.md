@@ -1,5 +1,5 @@
-# LuaC 
-(I will change the name soon because LuaC is the same name as the offical Lua compiler and it makes error debuging really confusing)
+# RetroC 
+(I will change the name soon because RetroC is the same name as the offical Lua compiler and it makes error debuging really confusing)
 
 ## DANGER, DO NOT USE THIS PROJECT**
 **It is not in a usable on your own state yet, check back in a few weeks.***
@@ -12,10 +12,10 @@ This is my first project written in C, so expect bugs, incomplete systems, and r
 ---
 
 ## Overview
-LuaC creates a minimal virtual computer environment.
+RetroC creates a minimal virtual computer environment.
 
 The core design philosophy is simple: **everything is done in Lua**.  
-Unlike alternatives such as CraftOS-PC, LuaC does not provide high-level helpers or shortcuts.  
+Unlike alternatives such as CraftOS-PC, RetroC does not provide high-level helpers or shortcuts.  
 
 You are expected to implement your own text rendering, UI, and higher-level systems entirely in Lua using the low-level pixel API, there are some other graphic functions such as lines and regtangles because of performance concern. (Clearing the screen shouldn't take 20,000 API calls)
 
