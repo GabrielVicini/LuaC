@@ -11,7 +11,7 @@ int main(void)
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(620, 360, "RetroC");
 
-    const char *iconFile = "../resources/assets/icon_light.png";
+    const char *iconFile = "../resources/assets/icon.png";
     Image icon = LoadImage(iconFile);
     SetWindowIcon(icon);
     UnloadImage(icon);
