@@ -25,7 +25,6 @@ static int lua_term_getPixel(lua_State *L) {
     int x = (int)luaL_optinteger(L, 1, 0);
     int y = (int)luaL_optinteger(L, 2, 0);
 
-    // no framebuffer? fail
     if (!g_fb) {
         lua_pushinteger(L, 0); // r
         lua_pushinteger(L, 0); // g
@@ -55,7 +54,10 @@ static int lua_term_getPixel(lua_State *L) {
     return 4;
 }
 
-
+static int lua_term_setPixels(lua_State *L) {
+    // I'm thinking the user can pass a table of colors and positions to stop sending so many API calls.
+    return 1;
+}
 
 static int lua_term_setPixel(lua_State *L) {
     int x = (int)luaL_optinteger(L, 1, 0);
@@ -163,6 +165,9 @@ void GraphicsRegister(lua_State *L) {
     lua_pushcfunction(L, lua_term_setPixel);
     lua_setfield(L, -2, "setPixel");
 
+    lua_pushcfunction(L, lua_term_setPixel);
+    lua_setfield(L, -2, "setPixels");
+
     lua_pushcfunction(L, lua_term_getSize);
     lua_setfield(L, -2, "getSize");
 
@@ -179,5 +184,4 @@ void GraphicsRegister(lua_State *L) {
     lua_setfield(L, -2, "getPixel");
 
     lua_setglobal(L, "term");
-    // lua_pop(L, 1); // <- you don't actually need this; setglobal already pops
 }

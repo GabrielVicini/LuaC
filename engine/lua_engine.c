@@ -8,7 +8,7 @@ static double update_thread_wake = 0.0;
 
 lua_State* LuaEngine_Create() {
     lua_State *L = luaL_newstate();
-    luaL_openlibs(L);          // <-- this loads base, math, string, table, io, os, debug, jit, etc.
+    luaL_openlibs(L);
     GraphicsRegister(L);
     SystemRegister(L);
     return L;

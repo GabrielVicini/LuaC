@@ -25,7 +25,7 @@ static int lua_sys_wait(lua_State *L) {
 }
 
 static int lua_sys_unixTime(lua_State *L) {
-    time_t t = time(NULL);       // seconds since epoch
+    time_t t = time(NULL);
     lua_pushinteger(L, (lua_Integer)t);
     return 1;
 }
